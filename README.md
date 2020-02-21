@@ -1,27 +1,65 @@
-# TSDX Bootstrap
+<h1 align="center">Welcome to qqueue 👋</h1>
+<p>
+  <a href="https://www.npmjs.com/package/qqueue" target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/qqueue.svg">
+  </a>
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
-This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
+## Install
 
-## Local Development
+```sh
+yarn add qqueue
+```
 
-Below is a list of commands you will probably find useful.
+## Usage
 
-### `npm start` or `yarn start`
+```javascript
+import qqueue from 'qqueue';
+import waait from 'waait';
 
-Runs the project in development/watch mode. Your project will be rebuilt upon changes. TSDX has a special logger for you convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
+waait(3000).then(() => {
+  console.log(1);
+});
 
-<img src="https://user-images.githubusercontent.com/4060187/52168303-574d3a00-26f6-11e9-9f3b-71dbec9ebfcb.gif" width="600" />
+waait(1000).then(() => {
+  console.log(2);
+});
+/* 
+output
+2
+1
+*/
 
-Your library will be rebuilt if you make edits.
+/* with qqueue */
+qqueue
+  .push(() => waait(3000))
+  .then(() => {
+    console.log(1);
+  });
 
-### `npm run build` or `yarn build`
+qqueue
+  .push(() => waait(1000))
+  .then(() => {
+    console.log(2);
+  });
+/* 
+output
+1
+2
+*/
+```
 
-Bundles the package to the `dist` folder.
-The package is optimized and bundled with Rollup into multiple formats (CommonJS, UMD, and ES Module).
+## Author
 
-<img src="https://user-images.githubusercontent.com/4060187/52168322-a98e5b00-26f6-11e9-8cf6-222d716b75ef.gif" width="600" />
+👤 **yasintz**
 
-### `npm test` or `yarn test`
+## Show your support
 
-Runs the test watcher (Jest) in an interactive mode.
-By default, runs tests related to files changed since the last commit.
+Give a ⭐️ if this project helped you!
+
+---
+
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
