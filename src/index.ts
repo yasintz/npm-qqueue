@@ -9,7 +9,19 @@ class Queue {
 
   private workingOnPromise = false;
 
-  private stop = false;
+  private _stop = false;
+  private _pause = false;
+
+  stop = () => {
+    this._stop = true;
+  };
+
+  pause = () => {
+    this._pause = true;
+  };
+  resume = () => {
+    this._pause = false;
+  };
 
   push = (promise: QueueStore['promise']) => {
     return new Promise<any>((resolve, reject) => {
@@ -26,12 +38,16 @@ class Queue {
     if (this.workingOnPromise) {
       return;
     }
-    if (this.stop) {
+    if (this._stop) {
       this.queue = [];
-      this.stop = false;
-
+      this._stop = false;
       return;
     }
+
+    if (this._pause) {
+      return;
+    }
+
     const item = this.queue.shift();
     if (!item) {
       return;
