@@ -1,5 +1,7 @@
+type PromiseFunction<T> = () => Promise<T>;
+
 interface QueueStore {
-  promise: () => Promise<any>;
+  promise: PromiseFunction<any>;
   resolve: (v: any) => void;
   reject: (e: any) => void;
 }
@@ -23,8 +25,8 @@ class Queue {
     this._pause = false;
   };
 
-  push = (promise: QueueStore['promise']) => {
-    return new Promise<any>((resolve, reject) => {
+  push = <T>(promise: PromiseFunction<T>) => {
+    return new Promise<T>((resolve, reject) => {
       this.queue.push({
         promise,
         resolve,
@@ -74,8 +76,4 @@ class Queue {
   };
 }
 
-export function create() {
-  return new Queue();
-}
-
-export default create();
+export default Queue;
